@@ -1,0 +1,48 @@
+class MinStack {
+        private final Deque<Long> deq;
+
+    private long min;
+
+    public MinStack() {
+        this.deq = new ArrayDeque<>();
+        this.min = Long.MAX_VALUE;
+    }
+
+    public void push(int val) {
+        if (deq.isEmpty()) {
+            this.deq.push(0L);
+            this.min = val;
+            return;
+        }
+        
+        deq.push(val - min);
+        if (val < min) {
+            this.min = val;
+        }
+    }
+
+    public void pop() {
+        if (deq.isEmpty()) {
+            return;
+        }
+
+        long pop = deq.pop();
+
+        if (pop < 0) {
+            this.min = this.min - pop;
+        }
+    }
+
+    public int top() {
+        long top = deq.peekFirst();
+        if (top > 0) {
+            return (int) (this.min + top);
+        } else {
+            return (int) this.min;
+        }
+    }
+
+    public int getMin() {
+        return (int) this.min;
+    }
+}
